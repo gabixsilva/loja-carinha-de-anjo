@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Carinha de Anjo — Loja Online</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --rosa:    #f472b6;
+  --rosa2:   #ec4899;
+  --lilas:   #a78bfa;
+  --azul:    #60a5fa;
+  --verde:   #34d399;
+  --amarelo: #fbbf24;
+  --bg:      #fdf4ff;
+  --surface: #fff;
+  --text:    #1e1b4b;
+  --muted:   #7c6f9f;
+  --border:  #e9d5ff;
+  --shadow:  0 4px 24px rgba(167,139,250,.15);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* ── HEADER ── */
+header{
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+  padding:16px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+  box-shadow:0 4px 20px rgba(124,58,237,.3);
+}
+.logo{font-family:'Baloo 2',cursive;font-size:22px;font-weight:800;color:#fff;display:flex;align-items:center;gap:8px}
+.logo span{font-size:26px}
+.cart-btn{
+  background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.4);
+  border-radius:50px;padding:8px 16px;color:#fff;font-family:'Baloo 2',cursive;
+  font-weight:700;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:6px;
+  backdrop-filter:blur(8px);transition:all .2s;
+}
+.cart-btn:hover{background:rgba(255,255,255,.3)}
+.cart-badge{background:#fbbf24;color:#1e1b4b;border-radius:50%;width:20px;height:20px;
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(160deg,#7c3aed 0%,#ec4899 50%,#f472b6 100%);
+  padding:40px 20px 60px;text-align:center;color:#fff;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero h1{font-family:'Baloo 2',cursive;font-size:28px;font-weight:800;position:relative;margin-bottom:8px}
+.hero p{font-size:15px;opacity:.9;position:relative}
+
+/* ── FILTROS ── */
+.filtros{padding:20px 16px 8px;display:flex;flex-direction:column;gap:12px}
+.filtro-label{font-family:'Baloo 2',cursive;font-weight:700;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{
+  padding:8px 16px;border-radius:50px;border:2px solid var(--border);
+  background:var(--surface);color:var(--muted);font-family:'Nunito',sans-serif;
+  font-weight:700;font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+.pill.ativo{border-color:var(--rosa2);background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff}
+.pill:hover:not(.ativo){border-color:var(--lilas);color:var(--text)}
+
+/* ── GRID PRODUTOS ── */
+.produtos-section{padding:8px 16px 100px}
+.secao-titulo{
+  font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;color:var(--text);
+  margin:16px 0 12px;display:flex;align-items:center;gap:8px;
+}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.card{
+  background:var(--surface);border-radius:16px;overflow:hidden;
+  box-shadow:var(--shadow);border:1.5px solid var(--border);
+  cursor:pointer;transition:transform .15s,box-shadow .15s;
+}
+.card:active{transform:scale(.97)}
+.card:hover{box-shadow:0 8px 32px rgba(167,139,250,.25)}
+.card-img{
+  width:100%;aspect-ratio:1;object-fit:cover;background:linear-gradient(135deg,#f3e8ff,#fce7f3);
+  display:flex;align-items:center;justify-content:center;font-size:48px;
+}
+.card-img img{width:100%;height:100%;object-fit:cover}
+.card-body{padding:10px 12px 12px}
+.card-nome{font-family:'Baloo 2',cursive;font-weight:700;font-size:13px;color:var(--text);margin-bottom:2px;line-height:1.3}
+.card-tam{font-size:11px;color:var(--muted);margin-bottom:6px}
+.card-preco{font-family:'Baloo 2',cursive;font-weight:800;font-size:16px;color:var(--rosa2)}
+.card-estoque{font-size:10px;color:var(--verde);font-weight:700}
+.card-estoque.baixo{color:var(--amarelo)}
+.card-estoque.zero{color:#f87171}
+.sem-estoque{opacity:.5;pointer-events:none}
+
+/* ── VAZIO ── */
+.vazio{text-align:center;padding:60px 20px;color:var(--muted)}
+.vazio-emoji{font-size:64px;margin-bottom:16px}
+.vazio h3{font-family:'Baloo 2',cursive;font-size:20px;color:var(--text);margin-bottom:8px}
+
+/* ── MODAL PRODUTO ── */
+.overlay{position:fixed;inset:0;background:rgba(30,27,75,.5);z-index:200;backdrop-filter:blur(4px);display:none}
+.overlay.ativo{display:flex;align-items:flex-end;justify-content:center}
+.modal{
+  background:var(--surface);border-radius:24px 24px 0 0;width:100%;max-width:480px;
+  max-height:90vh;overflow-y:auto;padding:24px 20px 40px;
+  animation:slideUp .25s ease;
+}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-img{width:100%;aspect-ratio:1;border-radius:16px;background:linear-gradient(135deg,#f3e8ff,#fce7f3);
+  display:flex;align-items:center;justify-content:center;font-size:80px;overflow:hidden;margin-bottom:16px}
+.modal-img img{width:100%;height:100%;object-fit:cover}
+.modal-nome{font-family:'Baloo 2',cursive;font-size:22px;font-weight:800;margin-bottom:4px}
+.modal-preco{font-family:'Baloo 2',cursive;font-size:26px;font-weight:800;color:var(--rosa2);margin-bottom:16px}
+.modal-label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.tamanhos{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.tam-btn{
+  width:44px;height:44px;border-radius:12px;border:2px solid var(--border);
+  background:var(--surface);font-family:'Baloo 2',cursive;font-weight:700;font-size:13px;
+  color:var(--muted);cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;
+}
+.tam-btn.sel{border-color:var(--rosa2);background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff}
+.tam-btn.esgotado{opacity:.35;text-decoration:line-through;cursor:not-allowed}
+.qtd-row{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.qtd-btn{
+  width:40px;height:40px;border-radius:50%;border:2px solid var(--border);
+  background:var(--surface);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-weight:700;color:var(--text);transition:all .15s;
+}
+.qtd-btn:hover{border-color:var(--rosa2);color:var(--rosa2)}
+.qtd-val{font-family:'Baloo 2',cursive;font-size:22px;font-weight:800;min-width:32px;text-align:center}
+.btn-add{
+  width:100%;padding:16px;border-radius:16px;border:none;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;
+  font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;cursor:pointer;
+  transition:opacity .15s;
+}
+.btn-add:hover{opacity:.9}
+.btn-add:disabled{opacity:.4;cursor:not-allowed}
+.modal-close{
+  position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;
+  background:var(--bg);border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+}
+
+/* ── CARRINHO ── */
+.carrinho-overlay{position:fixed;inset:0;background:rgba(30,27,75,.5);z-index:300;backdrop-filter:blur(4px);display:none}
+.carrinho-overlay.ativo{display:flex;align-items:flex-end;justify-content:center}
+.carrinho-panel{
+  background:var(--surface);border-radius:24px 24px 0 0;width:100%;max-width:480px;
+  max-height:92vh;display:flex;flex-direction:column;
+  animation:slideUp .25s ease;
+}
+.carrinho-header{
+  padding:20px 20px 16px;border-bottom:1.5px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.carrinho-titulo{font-family:'Baloo 2',cursive;font-size:20px;font-weight:800}
+.carrinho-body{flex:1;overflow-y:auto;padding:16px 20px}
+.carrinho-item{
+  display:flex;gap:12px;padding:12px 0;border-bottom:1.5px solid var(--border);
+  align-items:center;
+}
+.carrinho-item-img{
+  width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#f3e8ff,#fce7f3);
+  display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;overflow:hidden;
+}
+.carrinho-item-img img{width:100%;height:100%;object-fit:cover}
+.carrinho-item-info{flex:1}
+.carrinho-item-nome{font-weight:700;font-size:13px;margin-bottom:2px}
+.carrinho-item-tam{font-size:11px;color:var(--muted)}
+.carrinho-item-preco{font-family:'Baloo 2',cursive;font-weight:800;font-size:15px;color:var(--rosa2)}
+.carrinho-item-rem{background:none;border:none;color:#f87171;font-size:18px;cursor:pointer;padding:4px}
+.carrinho-footer{padding:16px 20px 32px;border-top:1.5px solid var(--border)}
+.carrinho-total{
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;margin-bottom:16px;
+}
+.btn-checkout{
+  width:100%;padding:16px;border-radius:16px;border:none;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;
+  font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;cursor:pointer;
+}
+
+/* ── CHECKOUT ── */
+.checkout-overlay{position:fixed;inset:0;background:var(--bg);z-index:400;overflow-y:auto;display:none}
+.checkout-overlay.ativo{display:block}
+.checkout-header{
+  background:linear-gradient(135deg,#7c3aed,#ec4899);padding:16px 20px;
+  display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10;
+}
+.btn-voltar{background:rgba(255,255,255,.2);border:none;color:#fff;width:36px;height:36px;
+  border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.checkout-titulo{font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;color:#fff}
+.checkout-body{padding:20px 16px 100px}
+.step{margin-bottom:24px}
+.step-titulo{font-family:'Baloo 2',cursive;font-size:16px;font-weight:800;color:var(--text);
+  margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.step-badge{
+  width:28px;height:28px;border-radius:50%;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;
+  font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+
+/* Entrega */
+.entrega-opcoes{display:flex;flex-direction:column;gap:8px}
+.entrega-card{
+  padding:14px 16px;border-radius:14px;border:2px solid var(--border);
+  background:var(--surface);cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:12px;
+}
+.entrega-card.sel{border-color:var(--rosa2);background:linear-gradient(135deg,rgba(124,58,237,.05),rgba(236,72,153,.05))}
+.entrega-card-icon{font-size:24px}
+.entrega-card-info{flex:1}
+.entrega-card-nome{font-weight:700;font-size:14px}
+.entrega-card-desc{font-size:12px;color:var(--muted)}
+.entrega-card-preco{font-family:'Baloo 2',cursive;font-weight:800;font-size:15px;color:var(--rosa2)}
+
+/* Bairros motoboy */
+.bairros-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}
+.bairro-btn{
+  padding:10px 12px;border-radius:12px;border:2px solid var(--border);
+  background:var(--surface);font-size:12px;font-weight:700;cursor:pointer;
+  transition:all .15s;text-align:left;
+}
+.bairro-btn.sel{border-color:var(--rosa2);color:var(--rosa2);background:rgba(236,72,153,.05)}
+.bairro-preco{font-family:'Baloo 2',cursive;font-size:13px;font-weight:800;color:var(--rosa2);display:block;margin-top:2px}
+
+/* Transportadoras */
+.transport-lista{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.transport-card{
+  padding:12px 16px;border-radius:12px;border:2px solid var(--border);
+  background:var(--surface);cursor:pointer;transition:all .15s;
+  display:flex;align-items:center;gap:12px;
+}
+.transport-card.sel{border-color:var(--rosa2)}
+.transport-nome{font-weight:700;font-size:13px}
+.transport-prazo{font-size:11px;color:var(--muted)}
+.transport-preco{font-family:'Baloo 2',cursive;font-weight:800;font-size:15px;color:var(--rosa2);margin-left:auto}
+.cep-row{display:flex;gap:8px;margin-top:10px}
+
+/* Formulário */
+.campo{margin-bottom:12px}
+.campo label{display:block;font-size:12px;font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.campo input,.campo select{
+  width:100%;padding:12px 14px;border-radius:12px;border:2px solid var(--border);
+  background:var(--surface);color:var(--text);font-family:'Nunito',sans-serif;
+  font-size:14px;outline:none;transition:border-color .15s;
+}
+.campo input:focus,.campo select:focus{border-color:var(--rosa2)}
+.campos-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* Resumo */
+.resumo-box{
+  background:var(--surface);border-radius:16px;border:1.5px solid var(--border);
+  padding:16px;margin-bottom:16px;
+}
+.resumo-linha{display:flex;justify-content:space-between;font-size:13px;
+  padding:6px 0;border-bottom:1px solid var(--border);}
+.resumo-linha:last-child{border:none;font-family:'Baloo 2',cursive;font-size:17px;font-weight:800}
+.resumo-linha span:last-child{font-weight:700;color:var(--rosa2)}
+
+/* PIX */
+.pix-box{
+  background:linear-gradient(135deg,rgba(124,58,237,.05),rgba(236,72,153,.05));
+  border:2px solid var(--border);border-radius:16px;padding:20px;text-align:center;
+}
+.pix-titulo{font-family:'Baloo 2',cursive;font-size:17px;font-weight:800;margin-bottom:4px}
+.pix-valor{font-family:'Baloo 2',cursive;font-size:28px;font-weight:800;color:var(--rosa2);margin-bottom:16px}
+.pix-codigo{
+  background:var(--bg);border:1.5px dashed var(--border);border-radius:12px;
+  padding:12px;font-size:10px;word-break:break-all;color:var(--muted);
+  margin-bottom:12px;text-align:left;max-height:80px;overflow:hidden;
+}
+.btn-copiar{
+  width:100%;padding:14px;border-radius:14px;border:2px solid var(--rosa2);
+  background:transparent;color:var(--rosa2);font-family:'Baloo 2',cursive;
+  font-size:16px;font-weight:800;cursor:pointer;margin-bottom:10px;transition:all .15s;
+}
+.btn-copiar:hover{background:var(--rosa2);color:#fff}
+.pix-instrucoes{font-size:12px;color:var(--muted);line-height:1.6;text-align:left;margin-bottom:16px}
+.verificando{display:flex;align-items:center;justify-content:center;gap:8px;
+  font-size:13px;color:var(--muted);padding:12px;}
+.spinner{width:20px;height:20px;border:3px solid var(--border);border-top-color:var(--rosa2);
+  border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Sucesso */
+.sucesso-box{text-align:center;padding:40px 20px}
+.sucesso-emoji{font-size:80px;margin-bottom:16px;animation:bounce 1s ease infinite alternate}
+@keyframes bounce{from{transform:scale(1)}to{transform:scale(1.1)}}
+.sucesso-titulo{font-family:'Baloo 2',cursive;font-size:26px;font-weight:800;color:var(--text);margin-bottom:8px}
+.sucesso-desc{font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.6}
+.btn-wpp{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:16px;border-radius:16px;border:none;
+  background:#25d366;color:#fff;font-family:'Baloo 2',cursive;
+  font-size:17px;font-weight:800;cursor:pointer;text-decoration:none;margin-bottom:12px;
+}
+
+/* Loading */
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:60px 20px;gap:12px;color:var(--muted)}
+.loading-spinner{width:40px;height:40px;border:4px solid var(--border);
+  border-top-color:var(--rosa2);border-radius:50%;animation:spin .8s linear infinite}
+
+/* Util */
+.btn-prosseguir{
+  width:100%;padding:16px;border-radius:16px;border:none;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;
+  font-family:'Baloo 2',cursive;font-size:17px;font-weight:800;cursor:pointer;
+  margin-top:8px;transition:opacity .15s;
+}
+.btn-prosseguir:disabled{opacity:.4;cursor:not-allowed}
+.alert{padding:12px 16px;border-radius:12px;background:#fef3c7;border:1.5px solid #fbbf24;
+  font-size:13px;color:#92400e;margin-bottom:12px}
+
+@media(max-width:360px){.grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo"><span>👼</span>Carinha de Anjo</div>
+  <button class="cart-btn" onclick="abrirCarrinho()">
+    🛒 Carrinho <span class="cart-badge" id="cartBadge">0</span>
+  </button>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>👶 Moda Infantil com Amor</h1>
+  <p>Roupinhas lindas para os seus pequenos anjos ✨</p>
+</div>
+
+<!-- FILTROS -->
+<div class="filtros">
+  <div>
+    <div class="filtro-label">Gênero</div>
+    <div class="pills" id="pillsGenero">
+      <button class="pill ativo" onclick="filtrarGenero('todos',this)">Todos</button>
+      <button class="pill" onclick="filtrarGenero('Masculino',this)">👦 Masculino</button>
+      <button class="pill" onclick="filtrarGenero('Feminino',this)">👧 Feminino</button>
+      <button class="pill" onclick="filtrarGenero('Unissex',this)">🌈 Unissex</button>
+    </div>
+  </div>
+  <div>
+    <div class="filtro-label">Idade</div>
+    <div class="pills" id="pillsIdade">
+      <button class="pill ativo" onclick="filtrarIdade('todos',this)">Todas</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUTOS -->
+<div class="produtos-section">
+  <div id="produtosContainer">
+    <div class="loading"><div class="loading-spinner"></div>Carregando produtos...</div>
+  </div>
+</div>
+
+<!-- MODAL PRODUTO -->
+<div class="overlay" id="overlayProduto" onclick="fecharModal(event)">
+  <div class="modal" style="position:relative" id="modalProduto">
+    <button class="modal-close" onclick="fecharModalBtn()">✕</button>
+    <div id="modalConteudo"></div>
+  </div>
+</div>
+
+<!-- CARRINHO -->
+<div class="carrinho-overlay" id="overlayCarrinho" onclick="fecharCarrinhoClick(event)">
+  <div class="carrinho-panel" id="carrinhoPanel">
+    <div class="carrinho-header">
+      <div class="carrinho-titulo">🛒 Meu Carrinho</div>
+      <button style="background:none;border:none;font-size:22px;cursor:pointer" onclick="fecharCarrinho()">✕</button>
+    </div>
+    <div class="carrinho-body" id="carrinhoBody"></div>
+    <div class="carrinho-footer">
+      <div class="carrinho-total">
+        <span>Total</span>
+        <span id="carrinhoTotal">R$ 0,00</span>
+      </div>
+      <button class="btn-checkout" onclick="irCheckout()">Finalizar Compra →</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKOUT -->
+<div class="checkout-overlay" id="overlayCheckout">
+  <div class="checkout-header">
+    <button class="btn-voltar" onclick="fecharCheckout()">←</button>
+    <div class="checkout-titulo" id="checkoutTitulo">Finalizar Compra</div>
+  </div>
+  <div class="checkout-body" id="checkoutBody"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// ESTADO GLOBAL
+// ═══════════════════════════════════════════
+const API = '';  // mesmo domínio
+let produtos    = [];
+let filtroGenero = 'todos';
+let filtroIdade  = 'todos';
+let produtoAtual = null;
+let tamSel       = '';
+let qtdSel       = 1;
+let carrinho     = JSON.parse(localStorage.getItem('cda_carrinho_loja') || '[]');
+let checkoutStep = 1;
+let pedidoData   = {};
+
+// Bairros motoboy de Aracaju
+const BAIRROS_MOTOBOY = [
+  {nome:'Centro',          valor:8},
+  {nome:'Atalaia',         valor:10},
+  {nome:'Coroa do Meio',   valor:10},
+  {nome:'13 de Julho',     valor:9},
+  {nome:'Farolândia',      valor:12},
+  {nome:'Jabotiana',       valor:14},
+  {nome:'São Conrado',     valor:14},
+  {nome:'Luzia',           valor:12},
+  {nome:'Jardins',         valor:9},
+  {nome:'Grageru',         valor:10},
+  {nome:'Salgado Filho',   valor:11},
+  {nome:'Inácio Barbosa',  valor:12},
+  {nome:'América',         valor:11},
+  {nome:'Industrial',      valor:13},
+  {nome:'Porto Dantas',    valor:14},
+  {nome:'Outros bairros',  valor:16},
+];
+
+// ═══════════════════════════════════════════
+// CARREGAR PRODUTOS
+// ═══════════════════════════════════════════
+async function carregarProdutos() {
+  try {
+    const resp = await fetch(`${API}/api/estoque`);
+    produtos = await resp.json();
+    renderProdutos();
+    renderPillsIdade();
+  } catch(e) {
+    // Demo: produtos de exemplo para visualização
+    produtos = getProdutosDemo();
+    renderProdutos();
+    renderPillsIdade();
+  }
+}
+
+function getProdutosDemo() {
+  return [
+    {id:1,nome:'Conjunto Lara Juvenil',categoria:'MÉDIO',genero:'Feminino',preco:55,emoji:'👗',
+     tamanhos:[{tamanho:'2',quantidade:10},{tamanho:'4',quantidade:8},{tamanho:'6',quantidade:5},{tamanho:'8',quantidade:12}],
+     peso:0.5,largura:30,altura:8,comprimento:30,estoque_total:35},
+    {id:2,nome:'Bermuda Moletom Masculina',categoria:'BARATO',genero:'Masculino',preco:38,emoji:'👖',
+     tamanhos:[{tamanho:'4',quantidade:15},{tamanho:'6',quantidade:10},{tamanho:'8',quantidade:8},{tamanho:'10',quantidade:6}],
+     peso:0.4,largura:25,altura:5,comprimento:30,estoque_total:39},
+    {id:3,nome:'Body Manga Longa',categoria:'BARATO',genero:'Unissex',preco:29,emoji:'👕',
+     tamanhos:[{tamanho:'P',quantidade:20},{tamanho:'M',quantidade:18},{tamanho:'G',quantidade:12}],
+     peso:0.2,largura:20,altura:3,comprimento:25,estoque_total:50},
+    {id:4,nome:'Conjunto Temático Herói',categoria:'MÉDIO',genero:'Masculino',preco:62,emoji:'🦸',
+     tamanhos:[{tamanho:'6',quantidade:8},{tamanho:'8',quantidade:10},{tamanho:'10',quantidade:7},{tamanho:'12',quantidade:5}],
+     peso:0.55,largura:30,altura:8,comprimento:30,estoque_total:30},
+    {id:5,nome:'Vestido Princesa Festa',categoria:'CARO',genero:'Feminino',preco:89,emoji:'👸',
+     tamanhos:[{tamanho:'4',quantidade:4},{tamanho:'6',quantidade:6},{tamanho:'8',quantidade:3}],
+     peso:0.7,largura:35,altura:10,comprimento:35,estoque_total:13},
+    {id:6,nome:'Calça Jeans Infantil',categoria:'MÉDIO',genero:'Unissex',preco:48,emoji:'👖',
+     tamanhos:[{tamanho:'2',quantidade:12},{tamanho:'4',quantidade:9},{tamanho:'6',quantidade:7},{tamanho:'8',quantidade:5}],
+     peso:0.6,largura:28,altura:6,comprimento:32,estoque_total:33},
+  ];
+}
+
+// ═══════════════════════════════════════════
+// FILTROS
+// ═══════════════════════════════════════════
+function filtrarGenero(g, btn) {
+  filtroGenero = g;
+  document.querySelectorAll('#pillsGenero .pill').forEach(b=>b.classList.remove('ativo'));
+  btn.classList.add('ativo');
+  renderProdutos();
+  renderPillsIdade();
+}
+
+function filtrarIdade(i, btn) {
+  filtroIdade = i;
+  document.querySelectorAll('#pillsIdade .pill').forEach(b=>b.classList.remove('ativo'));
+  btn.classList.add('ativo');
+  renderProdutos();
+}
+
+function renderPillsIdade() {
+  const idades = new Set();
+  produtos.filter(p => filtroGenero==='todos' || p.genero===filtroGenero)
+    .forEach(p => {
+      (p.tamanhos||[]).forEach(t => {
+        if(t.quantidade > 0) idades.add(t.tamanho);
+      });
+    });
+
+  const ordemTam = ['RN','P','M','G','GG','1','2','3','4','6','8','10','12','14','16'];
+  const sorted = [...idades].sort((a,b) => {
+    const ia = ordemTam.indexOf(a), ib = ordemTam.indexOf(b);
+    if(ia>=0 && ib>=0) return ia-ib;
+    return a.localeCompare(b, undefined, {numeric:true});
+  });
+
+  const container = document.getElementById('pillsIdade');
+  container.innerHTML = `<button class="pill${filtroIdade==='todos'?' ativo':''}" onclick="filtrarIdade('todos',this)">Todas</button>`;
+  sorted.forEach(t => {
+    const btn = document.createElement('button');
+    btn.className = 'pill' + (filtroIdade===t?' ativo':'');
+    btn.textContent = t + ' anos';
+    btn.onclick = function(){ filtrarIdade(t, this); };
+    container.appendChild(btn);
+  });
+}
+
+function getProdutosFiltrados() {
+  return produtos.filter(p => {
+    const temEstoque = (p.estoque_total||0) > 0 || (p.tamanhos||[]).some(t=>t.quantidade>0);
+    if(!temEstoque) return false;
+    if(filtroGenero !== 'todos' && p.genero !== filtroGenero) return false;
+    if(filtroIdade !== 'todos') {
+      const temTam = (p.tamanhos||[]).some(t=>t.tamanho===filtroIdade && t.quantidade>0);
+      if(!temTam) return false;
+    }
+    return true;
+  });
+}
+
+function renderProdutos() {
+  const container = document.getElementById('produtosContainer');
+  const lista = getProdutosFiltrados();
+
+  if(lista.length === 0) {
+    container.innerHTML = `
+      <div class="vazio">
+        <div class="vazio-emoji">🔍</div>
+        <h3>Nenhum produto encontrado</h3>
+        <p>Tente outro filtro ou volte mais tarde!</p>
+      </div>`;
+    return;
+  }
+
+  const html = `
+    <div class="grid">
+      ${lista.map(p => {
+        const total = (p.tamanhos||[]).reduce((s,t)=>s+t.quantidade,0) || p.estoque_total || 0;
+        const estoqueClass = total > 10 ? 'verde' : total > 3 ? 'baixo' : 'zero';
+        const estoqueLabel = total > 10 ? `${total} disponíveis` : total > 3 ? `Só ${total} restantes!` : total > 0 ? `Últimas unidades!` : 'Esgotado';
+        return `
+          <div class="card${total===0?' sem-estoque':''}" onclick="abrirProduto(${p.id})">
+            <div class="card-img">
+              ${p.foto ? `<img src="${p.foto}" alt="${p.nome}" loading="lazy">` : `<span>${p.emoji||'👕'}</span>`}
+            </div>
+            <div class="card-body">
+              <div class="card-nome">${p.nome}</div>
+              <div class="card-tam">${(p.tamanhos||[]).filter(t=>t.quantidade>0).map(t=>t.tamanho).join(' · ')}</div>
+              <div class="card-preco">${fmtR(p.preco)}</div>
+              <div class="card-estoque ${estoqueClass}">${estoqueLabel}</div>
+            </div>
+          </div>`;
+      }).join('')}
+    </div>`;
+  container.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════
+// MODAL PRODUTO
+// ═══════════════════════════════════════════
+function abrirProduto(id) {
+  produtoAtual = produtos.find(p=>p.id===id);
+  if(!produtoAtual) return;
+  tamSel = '';
+  qtdSel = 1;
+  renderModal();
+  document.getElementById('overlayProduto').classList.add('ativo');
+  document.body.style.overflow = 'hidden';
+}
+
+function renderModal() {
+  const p = produtoAtual;
+  const tamanhos = p.tamanhos || [];
+  const html = `
+    <div class="modal-img">
+      ${p.foto ? `<img src="${p.foto}" alt="${p.nome}">` : `<span>${p.emoji||'👕'}</span>`}
+    </div>
+    <div class="modal-nome">${p.nome}</div>
+    <div class="modal-preco">${fmtR(p.preco)}</div>
+    <div class="modal-label">Tamanho</div>
+    <div class="tamanhos">
+      ${tamanhos.map(t => `
+        <button class="tam-btn${tamSel===t.tamanho?' sel':''}${t.quantidade===0?' esgotado':''}"
+          onclick="${t.quantidade>0?`selecionarTam('${t.tamanho}')`:'void(0)'}">${t.tamanho}</button>
+      `).join('')}
+    </div>
+    <div class="modal-label">Quantidade</div>
+    <div class="qtd-row">
+      <button class="qtd-btn" onclick="alterarQtd(-1)">−</button>
+      <div class="qtd-val" id="qtdVal">${qtdSel}</div>
+      <button class="qtd-btn" onclick="alterarQtd(1)">+</button>
+    </div>
+    <button class="btn-add" id="btnAdd" onclick="adicionarCarrinho()" ${!tamSel?'disabled':''}>
+      ${tamSel ? `🛒 Adicionar — ${fmtR(p.preco * qtdSel)}` : 'Selecione um tamanho'}
+    </button>`;
+  document.getElementById('modalConteudo').innerHTML = html;
+}
+
+function selecionarTam(t) {
+  tamSel = t;
+  renderModal();
+}
+
+function alterarQtd(d) {
+  const p = produtoAtual;
+  const tam = p.tamanhos?.find(t=>t.tamanho===tamSel);
+  const max = tam ? tam.quantidade : 99;
+  qtdSel = Math.max(1, Math.min(max, qtdSel + d));
+  document.getElementById('qtdVal').textContent = qtdSel;
+  const btnAdd = document.getElementById('btnAdd');
+  if(btnAdd && tamSel) btnAdd.textContent = `🛒 Adicionar — ${fmtR(p.preco * qtdSel)}`;
+}
+
+function adicionarCarrinho() {
+  if(!tamSel) return;
+  const p = produtoAtual;
+  const idx = carrinho.findIndex(c=>c.id===p.id && c.tamanho===tamSel);
+  if(idx >= 0) carrinho[idx].quantidade += qtdSel;
+  else carrinho.push({
+    id: p.id, nome: p.nome, tamanho: tamSel,
+    preco: p.preco, quantidade: qtdSel, emoji: p.emoji||'👕', foto: p.foto||'',
+    peso: p.peso||0.5, largura: p.largura||20, altura: p.altura||5, comprimento: p.comprimento||30
+  });
+  salvarCarrinho();
+  fecharModalBtn();
+  mostrarFeedback('✅ Adicionado ao carrinho!');
+}
+
+function fecharModal(e) {
+  if(e.target === document.getElementById('overlayProduto')) fecharModalBtn();
+}
+function fecharModalBtn() {
+  document.getElementById('overlayProduto').classList.remove('ativo');
+  document.body.style.overflow = '';
+}
+
+// ═══════════════════════════════════════════
+// CARRINHO
+// ═══════════════════════════════════════════
+function salvarCarrinho() {
+  localStorage.setItem('cda_carrinho_loja', JSON.stringify(carrinho));
+  atualizarBadge();
+  renderCarrinho();
+}
+
+function atualizarBadge() {
+  const total = carrinho.reduce((s,c)=>s+c.quantidade,0);
+  document.getElementById('cartBadge').textContent = total;
+}
+
+function abrirCarrinho() {
+  renderCarrinho();
+  document.getElementById('overlayCarrinho').classList.add('ativo');
+  document.body.style.overflow = 'hidden';
+}
+
+function fecharCarrinho() {
+  document.getElementById('overlayCarrinho').classList.remove('ativo');
+  document.body.style.overflow = '';
+}
+
+function fecharCarrinhoClick(e) {
+  if(e.target === document.getElementById('overlayCarrinho')) fecharCarrinho();
+}
+
+function renderCarrinho() {
+  const body = document.getElementById('carrinhoBody');
+  if(carrinho.length === 0) {
+    body.innerHTML = `<div class="vazio"><div class="vazio-emoji">🛒</div><h3>Carrinho vazio</h3><p>Adicione produtos para continuar!</p></div>`;
+    document.getElementById('carrinhoTotal').textContent = 'R$ 0,00';
+    return;
+  }
+  body.innerHTML = carrinho.map((c,i) => `
+    <div class="carrinho-item">
+      <div class="carrinho-item-img">
+        ${c.foto ? `<img src="${c.foto}" alt="${c.nome}">` : c.emoji}
+      </div>
+      <div class="carrinho-item-info">
+        <div class="carrinho-item-nome">${c.nome}</div>
+        <div class="carrinho-item-tam">Tam: ${c.tamanho} · Qtd: ${c.quantidade}</div>
+        <div class="carrinho-item-preco">${fmtR(c.preco * c.quantidade)}</div>
+      </div>
+      <button class="carrinho-item-rem" onclick="removerItem(${i})">🗑</button>
+    </div>
+  `).join('');
+  const total = carrinho.reduce((s,c)=>s+c.preco*c.quantidade,0);
+  document.getElementById('carrinhoTotal').textContent = fmtR(total);
+}
+
+function removerItem(i) {
+  carrinho.splice(i,1);
+  salvarCarrinho();
+}
+
+function irCheckout() {
+  if(carrinho.length === 0) return;
+  fecharCarrinho();
+  checkoutStep = 1;
+  pedidoData = {};
+  document.getElementById('overlayCheckout').classList.add('ativo');
+  document.body.style.overflow = 'hidden';
+  renderCheckout();
+}
+
+function fecharCheckout() {
+  if(checkoutStep > 1) { checkoutStep--; renderCheckout(); return; }
+  document.getElementById('overlayCheckout').classList.remove('ativo');
+  document.body.style.overflow = '';
+}
+
+// ═══════════════════════════════════════════
+// CHECKOUT
+// ═══════════════════════════════════════════
+function renderCheckout() {
+  const titulos = {1:'🚚 Entrega',2:'📍 Seus Dados',3:'💳 Pagamento'};
+  document.getElementById('checkoutTitulo').textContent = titulos[checkoutStep] || 'Finalizar';
+  const body = document.getElementById('checkoutBody');
+
+  if(checkoutStep === 1) renderStepEntrega(body);
+  else if(checkoutStep === 2) renderStepDados(body);
+  else if(checkoutStep === 3) renderStepPagamento(body);
+}
+
+// STEP 1 — Entrega
+function renderStepEntrega(body) {
+  const subtotal = carrinho.reduce((s,c)=>s+c.preco*c.quantidade,0);
+  body.innerHTML = `
+    <div class="step">
+      <div class="step-titulo"><div class="step-badge">1</div>Como quer receber?</div>
+      <div class="entrega-opcoes">
+        <div class="entrega-card${pedidoData.tipoEntrega==='retirada'?' sel':''}" onclick="selEntrega('retirada')">
+          <div class="entrega-card-icon">🏪</div>
+          <div class="entrega-card-info">
+            <div class="entrega-card-nome">Retirar na Loja</div>
+            <div class="entrega-card-desc">Aracaju — Grátis</div>
+          </div>
+          <div class="entrega-card-preco">GRÁTIS</div>
+        </div>
+        <div class="entrega-card${pedidoData.tipoEntrega==='motoboy'?' sel':''}" onclick="selEntrega('motoboy')">
+          <div class="entrega-card-icon">🛵</div>
+          <div class="entrega-card-info">
+            <div class="entrega-card-nome">Motoboy</div>
+            <div class="entrega-card-desc">Entrega em Aracaju</div>
+          </div>
+          <div class="entrega-card-preco">Ver bairros</div>
+        </div>
+        <div class="entrega-card${pedidoData.tipoEntrega==='transportadora'?' sel':''}" onclick="selEntrega('transportadora')">
+          <div class="entrega-card-icon">📦</div>
+          <div class="entrega-card-info">
+            <div class="entrega-card-nome">Correios / Jadlog</div>
+            <div class="entrega-card-desc">Para todo o Brasil</div>
+          </div>
+          <div class="entrega-card-preco">Calcular</div>
+        </div>
+      </div>
+
+      ${pedidoData.tipoEntrega==='motoboy' ? `
+        <div style="margin-top:12px">
+          <div class="modal-label">Selecione seu bairro</div>
+          <div class="bairros-grid">
+            ${BAIRROS_MOTOBOY.map(b => `
+              <button class="bairro-btn${pedidoData.bairroSel===b.nome?' sel':''}" onclick="selBairro('${b.nome}',${b.valor})">
+                ${b.nome}<span class="bairro-preco">${fmtR(b.valor)}</span>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      ` : ''}
+
+      ${pedidoData.tipoEntrega==='transportadora' ? `
+        <div style="margin-top:12px">
+          <div class="modal-label">Digite seu CEP</div>
+          <div class="cep-row">
+            <input type="text" id="inputCep" placeholder="00000-000" maxlength="9"
+              style="flex:1;padding:12px;border-radius:12px;border:2px solid var(--border);font-size:14px;outline:none;font-family:'Nunito',sans-serif"
+              value="${pedidoData.cepBusca||''}"
+              oninput="mascaraCep(this)" onkeypress="if(event.key==='Enter')calcularFrete()">
+            <button onclick="calcularFrete()" style="padding:12px 16px;border-radius:12px;border:none;
+              background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-family:'Baloo 2',cursive;
+              font-weight:700;cursor:pointer">Buscar</button>
+          </div>
+          <div id="transportLista"></div>
+        </div>
+      ` : ''}
+
+      <button class="btn-prosseguir" onclick="prosseguirEntrega()"
+        ${podeProsseguirEntrega()?'':'disabled'}>
+        Continuar →
+      </button>
+    </div>`;
+
+  // Renderiza opções de transportadora se já calculou
+  if(pedidoData.tipoEntrega==='transportadora' && pedidoData.opcoesTransporte?.length > 0) {
+    renderTransportadoras();
+  }
+}
+
+function selEntrega(tipo) {
+  pedidoData.tipoEntrega = tipo;
+  pedidoData.bairroSel = '';
+  pedidoData.valorFrete = 0;
+  pedidoData.transportSel = null;
+  renderCheckout();
+}
+
+function selBairro(nome, valor) {
+  pedidoData.bairroSel = nome;
+  pedidoData.valorFrete = valor;
+  renderCheckout();
+}
+
+function mascaraCep(el) {
+  let v = el.value.replace(/\D/g,'');
+  if(v.length > 5) v = v.slice(0,5)+'-'+v.slice(5,8);
+  el.value = v;
+}
+
+async function calcularFrete() {
+  const cep = document.getElementById('inputCep')?.value.replace(/\D/g,'');
+  if(!cep || cep.length !== 8) { alert('Digite um CEP válido com 8 dígitos.'); return; }
+  pedidoData.cepBusca = cep;
+
+  const lista = document.getElementById('transportLista');
+  lista.innerHTML = `<div class="verificando"><div class="spinner"></div>Calculando frete...</div>`;
+
+  try {
+    const resp = await fetch(`${API}/api/frete/calcular`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        cep_destino: cep,
+        produtos: carrinho.map(c=>({
+          id: c.id, peso: c.peso||0.5, largura: c.largura||20,
+          altura: c.altura||5, comprimento: c.comprimento||30,
+          preco: c.preco, quantidade: c.quantidade
+        }))
+      })
+    });
+    const opcoes = await resp.json();
+    pedidoData.opcoesTransporte = opcoes;
+    pedidoData.transportSel = null;
+    renderTransportadoras();
+  } catch(e) {
+    lista.innerHTML = `<div class="alert">Erro ao calcular frete. Verifique o CEP e tente novamente.</div>`;
+  }
+}
+
+function renderTransportadoras() {
+  const lista = document.getElementById('transportLista');
+  if(!lista) return;
+  const opcoes = pedidoData.opcoesTransporte || [];
+  if(opcoes.length === 0) {
+    lista.innerHTML = `<div class="alert">Nenhuma opção de frete disponível para este CEP.</div>`;
+    return;
+  }
+  lista.innerHTML = `
+    <div class="transport-lista" style="margin-top:10px">
+      ${opcoes.map((o,i) => `
+        <div class="transport-card${pedidoData.transportSel?.id===o.id?' sel':''}" onclick="selTransporte(${i})">
+          <div>
+            <div class="transport-nome">${o.empresa} — ${o.nome}</div>
+            <div class="transport-prazo">Prazo: ${o.prazo} dias úteis</div>
+          </div>
+          <div class="transport-preco">${fmtR(o.preco)}</div>
+        </div>
+      `).join('')}
+    </div>`;
+  // Atualizar botão
+  const btn = document.querySelector('.btn-prosseguir');
+  if(btn) btn.disabled = !podeProsseguirEntrega();
+}
+
+function selTransporte(i) {
+  const op = pedidoData.opcoesTransporte[i];
+  pedidoData.transportSel = op;
+  pedidoData.valorFrete = op.preco;
+  renderTransportadoras();
+  const btn = document.querySelector('.btn-prosseguir');
+  if(btn) btn.disabled = !podeProsseguirEntrega();
+}
+
+function podeProsseguirEntrega() {
+  if(!pedidoData.tipoEntrega) return false;
+  if(pedidoData.tipoEntrega==='motoboy') return !!pedidoData.bairroSel;
+  if(pedidoData.tipoEntrega==='transportadora') return !!pedidoData.transportSel;
+  return true;
+}
+
+function prosseguirEntrega() {
+  if(!podeProsseguirEntrega()) return;
+  checkoutStep = 2;
+  renderCheckout();
+}
+
+// STEP 2 — Dados do cliente
+function renderStepDados(body) {
+  const precisaEnd = pedidoData.tipoEntrega !== 'retirada';
+  body.innerHTML = `
+    <div class="step">
+      <div class="step-titulo"><div class="step-badge">2</div>Seus Dados</div>
+      <div class="campo">
+        <label>Nome completo *</label>
+        <input type="text" id="fNome" placeholder="Seu nome" value="${pedidoData.nome||''}" oninput="pedidoData.nome=this.value">
+      </div>
+      <div class="campo">
+        <label>WhatsApp *</label>
+        <input type="tel" id="fTel" placeholder="(79) 99999-9999" value="${pedidoData.telefone||''}" oninput="pedidoData.telefone=this.value">
+      </div>
+      <div class="campo">
+        <label>E-mail (opcional)</label>
+        <input type="email" id="fEmail" placeholder="seu@email.com" value="${pedidoData.email||''}" oninput="pedidoData.email=this.value">
+      </div>
+
+      ${precisaEnd ? `
+        <div class="step-titulo" style="margin-top:20px"><div class="step-badge">📍</div>Endereço de Entrega</div>
+        <div class="campo">
+          <label>CEP *</label>
+          <div style="display:flex;gap:8px">
+            <input type="text" id="fCep" placeholder="00000-000" maxlength="9"
+              value="${pedidoData.endCep||''}"
+              oninput="mascaraCep(this);pedidoData.endCep=this.value"
+              style="flex:1">
+            <button onclick="buscarCep()" style="padding:12px 16px;border-radius:12px;border:none;
+              background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-family:'Baloo 2',cursive;
+              font-weight:700;cursor:pointer">Buscar</button>
+          </div>
+        </div>
+        <div class="campo">
+          <label>Rua *</label>
+          <input type="text" id="fRua" placeholder="Rua / Avenida" value="${pedidoData.endRua||''}" oninput="pedidoData.endRua=this.value">
+        </div>
+        <div class="campos-row">
+          <div class="campo">
+            <label>Número *</label>
+            <input type="text" id="fNum" placeholder="123" value="${pedidoData.endNum||''}" oninput="pedidoData.endNum=this.value">
+          </div>
+          <div class="campo">
+            <label>Complemento</label>
+            <input type="text" id="fComp" placeholder="Apto, bloco..." value="${pedidoData.endComp||''}" oninput="pedidoData.endComp=this.value">
+          </div>
+        </div>
+        <div class="campo">
+          <label>Bairro *</label>
+          <input type="text" id="fBairro" placeholder="Bairro" value="${pedidoData.endBairro||''}" oninput="pedidoData.endBairro=this.value">
+        </div>
+        <div class="campos-row">
+          <div class="campo">
+            <label>Cidade *</label>
+            <input type="text" id="fCidade" placeholder="Cidade" value="${pedidoData.endCidade||'Aracaju'}" oninput="pedidoData.endCidade=this.value">
+          </div>
+          <div class="campo">
+            <label>Estado *</label>
+            <input type="text" id="fEstado" placeholder="SE" maxlength="2" value="${pedidoData.endEstado||'SE'}" oninput="pedidoData.endEstado=this.value">
+          </div>
+        </div>
+      ` : ''}
+
+      <button class="btn-prosseguir" onclick="prosseguirDados()">Continuar →</button>
+    </div>`;
+}
+
+async function buscarCep() {
+  const cep = document.getElementById('fCep')?.value.replace(/\D/g,'');
+  if(!cep || cep.length !== 8) return;
+  try {
+    const resp = await fetch(`${API}/api/cep/${cep}`);
+    const d = await resp.json();
+    if(!d.erro) {
+      if(document.getElementById('fRua')) document.getElementById('fRua').value = d.logradouro || '';
+      if(document.getElementById('fBairro')) document.getElementById('fBairro').value = d.bairro || '';
+      if(document.getElementById('fCidade')) document.getElementById('fCidade').value = d.localidade || '';
+      if(document.getElementById('fEstado')) document.getElementById('fEstado').value = d.uf || '';
+      pedidoData.endRua    = d.logradouro || '';
+      pedidoData.endBairro = d.bairro || '';
+      pedidoData.endCidade = d.localidade || '';
+      pedidoData.endEstado = d.uf || '';
+    }
+  } catch(e) {}
+}
+
+function prosseguirDados() {
+  const nome = document.getElementById('fNome')?.value.trim();
+  const tel  = document.getElementById('fTel')?.value.trim();
+  if(!nome || !tel) { alert('Preencha nome e WhatsApp!'); return; }
+  pedidoData.nome = nome;
+  pedidoData.telefone = tel;
+  pedidoData.email = document.getElementById('fEmail')?.value.trim() || '';
+
+  const precisaEnd = pedidoData.tipoEntrega !== 'retirada';
+  if(precisaEnd) {
+    const rua    = document.getElementById('fRua')?.value.trim();
+    const num    = document.getElementById('fNum')?.value.trim();
+    const bairro = document.getElementById('fBairro')?.value.trim();
+    const cidade = document.getElementById('fCidade')?.value.trim();
+    if(!rua || !num || !bairro || !cidade) { alert('Preencha o endereço completo!'); return; }
+    pedidoData.endRua    = rua;
+    pedidoData.endNum    = num;
+    pedidoData.endComp   = document.getElementById('fComp')?.value.trim() || '';
+    pedidoData.endBairro = bairro;
+    pedidoData.endCidade = cidade;
+    pedidoData.endEstado = document.getElementById('fEstado')?.value.trim() || 'SE';
+    pedidoData.endCep    = document.getElementById('fCep')?.value.trim() || '';
+  }
+  checkoutStep = 3;
+  renderCheckout();
+}
+
+// STEP 3 — Pagamento PIX
+async function renderStepPagamento(body) {
+  const subtotal = carrinho.reduce((s,c)=>s+c.preco*c.quantidade,0);
+  const frete    = pedidoData.valorFrete || 0;
+  const total    = subtotal + frete;
+
+  body.innerHTML = `
+    <div class="step">
+      <div class="step-titulo"><div class="step-badge">3</div>Resumo do Pedido</div>
+      <div class="resumo-box">
+        ${carrinho.map(c=>`
+          <div class="resumo-linha">
+            <span>${c.quantidade}x ${c.nome} (${c.tamanho})</span>
+            <span>${fmtR(c.preco*c.quantidade)}</span>
+          </div>
+        `).join('')}
+        ${frete>0?`<div class="resumo-linha"><span>Frete</span><span>${fmtR(frete)}</span></div>`:''}
+        <div class="resumo-linha"><span>Total</span><span>${fmtR(total)}</span></div>
+      </div>
+      <div id="pixArea">
+        <div class="verificando"><div class="spinner"></div>Gerando PIX...</div>
+      </div>
+    </div>`;
+
+  await gerarPix(total);
+}
+
+async function gerarPix(total) {
+  const pixArea = document.getElementById('pixArea');
+  try {
+    const pedidoPayload = {
+      cliente: {
+        nome:     pedidoData.nome,
+        telefone: pedidoData.telefone.replace(/\D/g,''),
+        email:    pedidoData.email || ''
+      },
+      itens: carrinho.map(c=>({
+        id: String(c.id), nome: c.nome, tamanho: c.tamanho,
+        preco: c.preco, quantidade: c.quantidade
+      })),
+      endereco: {
+        rua:         pedidoData.endRua    || 'Retirada na loja',
+        numero:      pedidoData.endNum    || 'S/N',
+        complemento: pedidoData.endComp   || '',
+        bairro:      pedidoData.endBairro || pedidoData.bairroSel || 'Centro',
+        cidade:      pedidoData.endCidade || 'Aracaju',
+        estado:      pedidoData.endEstado || 'SE',
+        cep:         pedidoData.endCep    || pedidoData.cepBusca || '49000000'
+      },
+      entrega: {
+        tipo:          pedidoData.tipoEntrega,
+        bairro:        pedidoData.bairroSel || '',
+        transportadora: pedidoData.transportSel?.nome || '',
+        prazo:         pedidoData.transportSel?.prazo || 0,
+        valor:         pedidoData.valorFrete || 0
+      },
+      total
+    };
+
+    const resp = await fetch(`${API}/api/pix/gerar`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ pedido: pedidoPayload })
+    });
+    const data = await resp.json();
+
+    if(!data.ok) throw new Error(data.detalhe || data.erro);
+
+    pedidoData.pixCopiaECola = data.pix_copia_cola;
+    pedidoData.pedidoId      = data.pedido_id;
+    pedidoData.totalFinal    = total;
+    pedidoData.pedidoPayload = pedidoPayload;
+
+    renderPixCopiaECola(total, data.pix_copia_cola);
+    iniciarVerificacao(data.pedido_id, pedidoPayload);
+
+  } catch(e) {
+    pixArea.innerHTML = `
+      <div class="alert">Erro ao gerar PIX: ${e.message}</div>
+      <button class="btn-prosseguir" onclick="gerarPix(${total})">Tentar novamente</button>`;
+  }
+}
+
+function renderPixCopiaECola(total, codigo) {
+  const pixArea = document.getElementById('pixArea');
+  pixArea.innerHTML = `
+    <div class="pix-box">
+      <div class="pix-titulo">💠 Pague via PIX</div>
+      <div class="pix-valor">${fmtR(total)}</div>
+      <div class="pix-instrucoes">
+        1. Copie o código abaixo<br>
+        2. Abra seu banco ou carteira digital<br>
+        3. Escolha <strong>PIX Copia e Cola</strong><br>
+        4. Cole o código e confirme o pagamento<br>
+        <br>
+        ⏱️ O código expira em <strong>30 minutos</strong>. Após o pagamento seu pedido será confirmado automaticamente.
+      </div>
+      <div class="pix-codigo" id="pixCodigo">${codigo}</div>
+      <button class="btn-copiar" onclick="copiarPix()">📋 Copiar código PIX</button>
+      <div class="verificando" id="statusVerif">
+        <div class="spinner"></div>Aguardando pagamento...
+      </div>
+    </div>`;
+}
+
+async function copiarPix() {
+  try {
+    await navigator.clipboard.writeText(pedidoData.pixCopiaECola);
+    mostrarFeedback('✅ Código copiado!');
+  } catch(e) {
+    const el = document.getElementById('pixCodigo');
+    if(el) { const range = document.createRange(); range.selectNode(el);
+      window.getSelection().removeAllRanges(); window.getSelection().addRange(range); }
+  }
+}
+
+let verificacaoInterval = null;
+function iniciarVerificacao(pedidoId, pedidoPayload) {
+  if(verificacaoInterval) clearInterval(verificacaoInterval);
+  verificacaoInterval = setInterval(async () => {
+    try {
+      const resp = await fetch(`${API}/api/pix/verificar/${pedidoId}`);
+      const data = await resp.json();
+      if(data.pago) {
+        clearInterval(verificacaoInterval);
+        await confirmarPedido(pedidoPayload);
+      }
+    } catch(e) {}
+  }, 5000); // verifica a cada 5 segundos
+}
+
+async function confirmarPedido(pedidoPayload) {
+  try {
+    const resp = await fetch(`${API}/api/pedido/confirmar`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ pedido: pedidoPayload })
+    });
+    const data = await resp.json();
+    pedidoData.whatsappLink = data.whatsapp;
+    carrinho = [];
+    salvarCarrinho();
+    renderSucesso();
+  } catch(e) { renderSucesso(); }
+}
+
+function renderSucesso() {
+  const body = document.getElementById('checkoutBody');
+  document.getElementById('checkoutTitulo').textContent = '✅ Pedido Confirmado!';
+  body.innerHTML = `
+    <div class="sucesso-box">
+      <div class="sucesso-emoji">🎉</div>
+      <div class="sucesso-titulo">Pagamento Confirmado!</div>
+      <div class="sucesso-desc">
+        Seu pedido foi recebido com sucesso!<br><br>
+        Clique abaixo para abrir o WhatsApp e enviar o pedido para nós. Vamos separar suas peças com amor! 💕
+      </div>
+      <a class="btn-wpp" href="${pedidoData.whatsappLink||'#'}" target="_blank">
+        💬 Abrir WhatsApp
+      </a>
+      <button onclick="voltarLoja()" style="width:100%;padding:14px;border-radius:14px;border:2px solid var(--border);
+        background:transparent;color:var(--muted);font-family:'Baloo 2',cursive;font-size:15px;font-weight:700;cursor:pointer">
+        Continuar comprando
+      </button>
+    </div>`;
+}
+
+function voltarLoja() {
+  document.getElementById('overlayCheckout').classList.remove('ativo');
+  document.body.style.overflow = '';
+  atualizarBadge();
+}
+
+// ═══════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════
+function fmtR(v) {
+  return 'R$ ' + Number(v).toFixed(2).replace('.',',');
+}
+
+function mostrarFeedback(msg) {
+  const el = document.createElement('div');
+  el.style.cssText = `position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
+    background:#1e1b4b;color:#fff;padding:12px 20px;border-radius:50px;font-family:'Baloo 2',cursive;
+    font-weight:700;font-size:14px;z-index:999;animation:fadeInUp .3s ease;white-space:nowrap;`;
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(), 2000);
+}
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+atualizarBadge();
+carregarProdutos();
+</script>
+</body>
+</html>

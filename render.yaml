@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: carinha-de-anjo-loja
+    runtime: node
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: PAGBANK_TOKEN
+        value: 987d6310-30aa-4f7e-b76d-de3de8683c189f05549c4dcdb80f6a8e8be4313bbc9d1196-81ba-400e-86aa-f1845a1a3bf5
+      - key: PIX_CHAVE
+        value: "33538178000140"
+      - key: PIX_NOME
+        value: Gabriel Costa Silva
+      - key: SUPERFRETE_TOKEN
+        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3Nzk5MDg4MDgsInN1YiI6ImlPVUo1dElxUkJNWkNBcUhzeGp0djc5UjVGYTIifQ.9HiZozYL-Bv_avmn_AjmAksrVQ2fgrEeg7RX4TfSnjU
+      - key: SUPERFRETE_CEP_ORIGEM
+        value: "49010640"
+      - key: WHATSAPP_NUMERO
+        value: "5579999124556"
+      - key: PORT
+        value: "3000"
